@@ -7,6 +7,30 @@
 //
 
 import SwiftUI
+import Alamofire
+import Foundation
+
+struct UserModel: Codable {
+    let id: Int
+    let userName: String
+    let imageUrl: String
+}
+
+func getArticles() {
+    Alamofire.request("https://todo-practice-app.herokuapp.com/easy/first").response { response in
+        guard let data = response.data else {
+            return
+        }
+        let decoder = JSONDecoder()
+        do {
+            let tasks: [Task] = try decoder.decode([Task].self, from: data)
+            print(tasks)
+        } catch {
+            print(error)
+        }
+    }
+}
+
 
 struct ContentView: View {
     var body: some View {
